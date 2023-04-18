@@ -1,0 +1,37 @@
+{% extends 'base_email.html' %}
+{% load i18n %}
+
+{% block body %}
+<h1>
+    {% blocktranslate with company_name=settings.COMPANY_NAME %}Payment for {{ company_name }} succeeded{% endblocktranslate %}
+</h1>
+<p>
+{% blocktranslate %}Thank you for purchasing the subscription!{% endblocktranslate %}
+</p><br />
+<p>
+{% blocktranslate %}Payment and subscription details:{% endblocktranslate %}
+</p>
+<p>
+{% blocktranslate %}Amount:{% endblocktranslate %}{{ payment.get_amount_currency_display }} {{ payment.amount_value }}
+</p>
+<p>
+{% blocktranslate %}Access to courses:{% endblocktranslate %}
+{% for course in subscription.courses.all %}
+<p>{{ course.title }}: {{ course.topic }}</p>
+{% empty %}
+<p>{% blocktranslate %}All courses{% endblocktranslate %}</p>
+{% endfor %}
+</p>
+{% if subscription.expires_at %}
+<p>{% blocktranslate %}Subscription period:{% endblocktranslate %} {{ subscription.starts_at|date:"SHORT_DATE_FORMAT" }} – {{ subscription.expires_at|date:"SHORT_DATE_FORMAT" }}</p>
+{% else %}
+<p>{% blocktranslate %}Lifetime subscription{% endblocktranslate %}</p>
+{% endif %}
+<br/>
+<div style="text-align: center;">
+    <a href="{{ settings.FRONTEND_DOMAIN }}" style="background: #3273dc; color: #fff; text-decoration: none; margin-top: 10rem; padding: 0.8rem 3rem;
+                border-radius: 0.5rem; display: inline;">
+        {% blocktranslate %}Go to the portal{% endblocktranslate %}
+    </a>
+</div>
+{% endblock %}

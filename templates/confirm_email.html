@@ -1,0 +1,24 @@
+{% extends 'base_email.html' %}
+{% load i18n %}
+
+{% block body %}
+<h1>
+    {% blocktranslate with company_name=settings.COMPANY_NAME %}Welcome to {{ company_name }}!{% endblocktranslate %}
+</h1>
+<p>
+{% blocktranslate %}To start using the platform please confirm your email by pressing the button below.{% endblocktranslate %}
+</p><br />
+
+<div style="text-align: center;">
+    <a href="{{ url }}" style="background: #3273dc; color: #fff; text-decoration: none; margin-top: 10rem; padding: 0.8rem 3rem;
+                border-radius: 0.5rem; display: inline;">
+        {% blocktranslate %}Confirm{% endblocktranslate %}
+    </a>
+    <br />
+    <br />
+    {% blocktranslate%}If the button above does not work, copy the link and open it in your browser:{% endblocktranslate %}
+    <br />
+    <br />
+    <pre>{{ url }}</pre>
+</div>
+{% endblock %}

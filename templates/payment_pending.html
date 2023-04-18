@@ -1,0 +1,46 @@
+{% extends 'base_email.html' %}
+{% load i18n %}
+
+{% block body %}
+<h1>
+    {% blocktranslate with company_name=settings.COMPANY_NAME %}Payment for {{ company_name }} subscription is due{% endblocktranslate %}
+</h1>
+<p>
+{% blocktranslate %}To activate your subscription, please proceed with payment for your subscription.{% endblocktranslate %}
+</p><br />
+<p>
+{% blocktranslate %}Payment and subscription details:{% endblocktranslate %}
+</p>
+<p>
+{% blocktranslate %}Amount:{% endblocktranslate %}{{ payment.get_amount_currency_display }} {{ payment.amount_value }}
+</p>
+<p>
+{% blocktranslate %}Access to courses:{% endblocktranslate %}
+{% for course in subscription.courses.all %}
+<p>{{ course.title }}: {{ course.topic }}</p>
+{% empty %}
+<p>{% blocktranslate %}All courses{% endblocktranslate %}</p>
+{% endfor %}
+</p>
+{% if subscription.expires_at %}
+<p>{% blocktranslate %}Subscription period:{% endblocktranslate %} {{ subscription.starts_at|date:"SHORT_DATE_FORMAT" }} – {{ subscription.expires_at|date:"SHORT_DATE_FORMAT" }}</p>
+{% else %}
+<p>{% blocktranslate %}Lifetime subscription{% endblocktranslate %}</p>
+{% endif %}
+<br/>
+<p>
+{% blocktranslate %}To proceed with the secure payment, press the button below.{% endblocktranslate %}
+</p>
+<div style="text-align: center;">
+    <a href="{{ payment.confirmation_url }}" style="background: #3273dc; color: #fff; text-decoration: none; margin-top: 10rem; padding: 0.8rem 3rem;
+                border-radius: 0.5rem; display: inline;">
+        {% blocktranslate %}Pay{% endblocktranslate %}
+    </a>
+    <br />
+    <br />
+    {% blocktranslate%}If the button above does not work, copy the link and open it in your browser:{% endblocktranslate %}
+    <br />
+    <br />
+    <pre>{{ payment.confirmation_url }}</pre>
+</div>
+{% endblock %}
