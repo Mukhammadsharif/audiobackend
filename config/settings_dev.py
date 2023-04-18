@@ -3,10 +3,10 @@ DEBUG = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd1auq1j765a3vk',
-        'USER': 'plfrkschaulvqp',
-        'PASSWORD': 'ffad9700ee1e10f3fea85fa9ecdf14cedd17d3f9cee1757a161bdc2f3f909b74',
-        'HOST': 'ec2-52-73-155-171.compute-1.amazonaws.com',
+        'NAME': 'djangodb',
+        'USER': 'djangouser',
+        'PASSWORD': 'password',
+        'HOST': '90.156.210.208',
         'PORT': 5432,
     }
 }
